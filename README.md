@@ -19,3 +19,8 @@ Copy `.env.example` as `.env` and change the credentials as required. After, run
 ```
 node ace migration:run
 ```
+
+Run the server
+```
+node ace serve --watch
+```
