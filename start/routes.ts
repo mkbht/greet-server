@@ -26,6 +26,12 @@ Route.get('/', async () => {
 Route.group(() => {
   Route.post("login", "AuthController.login");
   Route.post("register", "AuthController.register");
+  Route.get("verify", "AuthController.verify");
+  Route.post("forgotPassword", "AuthController.forgotPassword");
+  Route.get("resetPassword", "AuthController.resetPassword");
+  Route.post("reset", "AuthController.reset");
   Route.group(() => {
+    Route.get("myprofile", "ProfilesController.myProfile");
+    Route.put("updateprofile", "ProfilesController.updateProfile");
   }).middleware("auth:api");
 }).prefix("api");

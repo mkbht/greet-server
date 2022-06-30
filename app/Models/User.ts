@@ -25,7 +25,25 @@ export default class User extends BaseModel {
   public dateOfBirth: Date
 
   @column()
-  public rememberMeToken?: string
+  public gender: number
+
+  @column()
+  public address: number
+
+  @column()
+  public avatar: string
+
+  @column()
+  public status: number
+
+  @column({ serializeAs: null })
+  public verificationToken: string
+
+  @column({ serializeAs: null })
+  public forgotPasswordToken: string
+
+  @column()
+  public lastLogin: DateTime
 
   @column.dateTime({ autoCreate: true })
   public createdAt: DateTime

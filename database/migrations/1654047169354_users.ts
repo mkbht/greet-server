@@ -12,7 +12,12 @@ export default class UsersSchema extends BaseSchema {
       table.string('first_name', 180).notNullable()
       table.string('last_name', 180).notNullable()
       table.date('date_of_birth').nullable()
-      table.string('remember_me_token').nullable()
+      table.tinyint('gender').nullable()
+      table.integer('address').nullable()
+      table.string('avatar').nullable()
+      table.tinyint('status').nullable()
+      table.string('verification_token').nullable()
+      table.dateTime('last_login').nullable()
 
       /**
        * Uses timestampz for PostgreSQL and DATETIME2 for MSSQL
