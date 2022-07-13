@@ -32,6 +32,16 @@ Route.group(() => {
   Route.post("reset", "AuthController.reset");
   Route.group(() => {
     Route.get("myprofile", "ProfilesController.myProfile");
-    Route.put("updateprofile", "ProfilesController.updateProfile");
+    Route.get("profile", "ProfilesController.fetchProfile");
+    Route.put("updateprofile", "ProfilesController.updateMyProfile");
+    Route.get("search", "ProfilesController.searchUsers");
+    Route.get("follow", "ProfilesController.follow");
+    Route.get("unfollow", "ProfilesController.unfollow");
+
+    // private chat
+    Route.get("chatlist", "PrivateChatsController.fetchChatList");
+    Route.get("chat", "PrivateChatsController.fetchChat");
+    Route.post("chat", "PrivateChatsController.sendChat");
+    Route.get("icebreaker", "PrivateChatsController.iceBreaker");
   }).middleware("auth:api");
 }).prefix("api");

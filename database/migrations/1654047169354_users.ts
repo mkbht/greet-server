@@ -11,7 +11,7 @@ export default class UsersSchema extends BaseSchema {
       table.string('password', 180).notNullable()
       table.string('first_name', 180).notNullable()
       table.string('last_name', 180).notNullable()
-      table.date('date_of_birth').nullable()
+      table.dateTime('date_of_birth').nullable()
       table.tinyint('gender').nullable()
       table.integer('address').nullable()
       table.string('avatar').nullable()

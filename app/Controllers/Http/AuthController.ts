@@ -5,9 +5,14 @@ import Mail from "@ioc:Adonis/Addons/Mail";
 
 export default class AuthController {
 
+  public async sleep(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
     public async login({request, auth, response}: HttpContextContract) {
         const username = request.input("username");
         const password = request.input("password");
+        await this.sleep(2000);
         // Lookup user manually
         const user = await User
             .query().where('username', username).orWhere('email', username).first();
