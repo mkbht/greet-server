@@ -59,6 +59,7 @@ export default class PrivateChatsController {
 
   public async sendChat({ response, request, auth }: HttpContextContract) {
     try {
+
         let message = new PrivateChat();
         message.sender = auth.user!.id;
         message.receiver = request.input("user");
@@ -67,7 +68,9 @@ export default class PrivateChatsController {
         await Event.emit("private:chat", message);
         return message;
     } catch(e) {
+      console.log("Err", e);
       return response.badRequest({message: e});
+
     }
   }
 

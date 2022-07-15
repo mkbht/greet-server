@@ -43,5 +43,13 @@ Route.group(() => {
     Route.get("chat", "PrivateChatsController.fetchChat");
     Route.post("chat", "PrivateChatsController.sendChat");
     Route.get("icebreaker", "PrivateChatsController.iceBreaker");
+
+    // chatrooms
+    Route.get("chatrooms", "ChatroomsController.listChatrooms");
+    Route.post("chatrooms", "ChatroomsController.create");
+    Route.delete("chatrooms", "ChatroomsController.delete");
+
+    Route.post("chatrooms/join", "ChatroomsController.join");
+    Route.delete("chatrooms/leave", "ChatroomsController.leave");
   }).middleware("auth:api");
 }).prefix("api");

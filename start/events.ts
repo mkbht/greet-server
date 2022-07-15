@@ -9,5 +9,5 @@
 */
 import Event from '@ioc:Adonis/Core/Event'
 
-Event.on('private:chat', 'User.onPrivateChat')
+Event.on('private:chat', 'Chat.onPrivateChat')
 

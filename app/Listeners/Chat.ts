@@ -8,20 +8,21 @@ export default class Chat {
     constructor() {
         this.pusher = new Pusher({
             appId: Env.get('PUSHER_APP_ID', ''),
-            key: Env.get('PUSHER_KEY', ''),
-            secret: Env.get('PUSHER_SECRET', ''),
+            key: Env.get('PUSHER_APP_KEY', ''),
+            secret: Env.get('PUSHER_APP_SECRET', ''),
             cluster: Env.get('PUSHER_CLUSTER', 'us2'),
-            encrypted: true
+            useTLS: false
         });
     }
 
     public async onPrivateChat(message) {
         let channel;
         if(message.sender < message.receiver) {
-            channel = "privatechat_" + message.sender + "_" + message.receiver;
+            channel = "chat_" + message.sender + "_" + message.receiver;
         } else {
-            channel = "privatechat_" + message.receiver + "_" + message.sender;
+            channel = "chat_" + message.receiver + "_" + message.sender;
         }
+
         this.pusher.trigger(channel, 'send-message', message);
     }
 }
