@@ -17,10 +17,12 @@
   "preloads": [
     "./start/routes",
     "./start/kernel",
+    "./start/socket",
     {
-      "file": "./start/events",
+      "file": "./start/game",
       "environment": [
         "console",
+        "repl",
         "web"
       ]
     }

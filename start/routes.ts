@@ -20,8 +20,9 @@
 
 import Route from '@ioc:Adonis/Core/Route'
 
-Route.get('/', async () => {
-  return { hello: 'world' }
+
+Route.get('/', async ({view}) => {
+  return view.render('welcome.edge');
 })
 Route.group(() => {
   Route.post("login", "AuthController.login");
@@ -46,10 +47,17 @@ Route.group(() => {
 
     // chatrooms
     Route.get("chatrooms", "ChatroomsController.listChatrooms");
+    Route.get("mychatrooms", "ChatroomsController.listMyChatrooms");
+    Route.get("joinedchatrooms", "ChatroomsController.listJoinedChatrooms");
     Route.post("chatrooms", "ChatroomsController.create");
     Route.delete("chatrooms", "ChatroomsController.delete");
 
     Route.post("chatrooms/join", "ChatroomsController.join");
-    Route.delete("chatrooms/leave", "ChatroomsController.leave");
+    Route.post("chatrooms/send", "ChatroomsController.sendChat");
+    Route.post("chatrooms/leave", "ChatroomsController.leave");
+
+    // gifts
+    Route.get("gifts", "GiftsController.list");
+
   }).middleware("auth:api");
 }).prefix("api");

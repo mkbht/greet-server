@@ -9,10 +9,11 @@ export default class AuthController {
     return new Promise((resolve) => setTimeout(resolve, time));
   }
 
-    public async login({request, auth, response}: HttpContextContract) {
+    public async login(http: HttpContextContract) {
+
+    let {request, auth, response} = http;
         const username = request.input("username");
         const password = request.input("password");
-        await this.sleep(2000);
         // Lookup user manually
         const user = await User
             .query().where('username', username).orWhere('email', username).first();
@@ -23,7 +24,10 @@ export default class AuthController {
             return response.badRequest({message: 'Please verify your account to login.'});
         }
         const token = await auth.use("api").login(user);
-        return token.toJSON();
+        return {
+          token: token.toJSON(),
+          user: user
+        };
     }
 
     public async register({ request, response }: HttpContextContract) {

@@ -13,6 +13,7 @@ export default class UsersSchema extends BaseSchema {
       table.string('last_name', 180).notNullable()
       table.dateTime('date_of_birth').nullable()
       table.tinyint('gender').nullable()
+      table.decimal('balance', 2).nullable()
       table.integer('address').nullable()
       table.string('avatar').nullable()
       table.tinyint('status').nullable()

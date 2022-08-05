@@ -1,0 +1,19 @@
+<body>
+  <!-- Rest of markup -->
+  This is socket
+  <button onclick="sendMessage()">Send to 25</button>
+
+    <script src="https://cdn.socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+      const socket = io('ws://0.0.0.0:3334')
+      socket.emit("login", 3);
+      socket.on('sendMessage', (data) => {
+        console.log(data)
+      })
+
+      function sendMessage() {
+        socket.emit("sendChat", "Hi from me" + Math.random());
+      }
+    </script>
+</body>
+</html>

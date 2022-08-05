@@ -11,10 +11,10 @@ export default class ProfilesController {
   }
 
   public async myProfile({ response, auth }: HttpContextContract) {
-    await this.sleep(1000);
     const user = await User.findBy("username", auth.user?.username);
     await user?.load("followers");
     await user?.load("followings");
+    await user?.load("gifts");
       if (!user) {
         return response.status(400).send({
           message: "Profile not found.",
@@ -25,7 +25,7 @@ export default class ProfilesController {
 
   public async fetchProfile({ request, response, auth }: HttpContextContract) {
     await this.sleep(1000);
-    const user = await User.findBy("username", request.input("username"));
+    const user = await User.findBy("username", request.input("username", auth.user?.id));
     await user?.load("followers");
     await user?.load("followings");
     let finalUser = JSON.parse(JSON.stringify(user));
@@ -97,7 +97,7 @@ export default class ProfilesController {
       let follow = new Follow();
       follow.follower_id = auth.user!.id;
       follow.following_id = request.input("user");
-      follow.save();
+      await follow.save();
     }
 
     return response.status(200).send({message: "Followed successfully!"});
@@ -107,7 +107,7 @@ export default class ProfilesController {
     const isFollowed = await Follow
     .query().where('follower_id', auth.user!.id).where('following_id', request.input("user")).first();
     if(isFollowed) {
-      isFollowed.delete();
+      await isFollowed.delete();
     }
 
     return response.status(200).send({message: "Unfollowed successfully!"});

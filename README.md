@@ -22,5 +22,8 @@ node ace migration:run
 
 Run the server
 ```
-node ace serve --watch
+npm run dev
 ```
+
+You need to install redis server for authentication to work.
+

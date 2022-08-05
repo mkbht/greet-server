@@ -1,8 +1,8 @@
 import { DateTime } from 'luxon'
 import Hash from '@ioc:Adonis/Core/Hash'
-import { column, beforeSave, BaseModel, hasMany, HasMany, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
-import Follow from './Follow'
-import { IdentityStore } from 'aws-sdk'
+import { column, beforeSave, BaseModel, manyToMany, ManyToMany } from '@ioc:Adonis/Lucid/Orm'
+import Gift from "App/Models/Gift";
+
 
 export default class User extends BaseModel {
   @column({ isPrimary: true })
@@ -22,6 +22,9 @@ export default class User extends BaseModel {
 
   @column({ serializeAs: null })
   public password: string
+
+  @column()
+  public balance: number
 
   @column.date()
   public dateOfBirth: DateTime
@@ -76,4 +79,9 @@ export default class User extends BaseModel {
     pivotTable: "follows"
   })
   public followings: ManyToMany<typeof User>
+
+  @manyToMany(() => Gift, {
+    pivotTable: 'user_gifts'
+  })
+  public gifts: ManyToMany<typeof Gift>
 }
