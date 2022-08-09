@@ -13,7 +13,7 @@ let timer = setInterval(init, 10000);
 
 Redis.subscribe('hot:play', async (payload) => {
   let data = JSON.parse(payload);
-  let status = await Redis.get("hot:status");
+  await Redis.get("hot:status");
   switch(data.status) {
     case 'start': {
       await startGame(data);

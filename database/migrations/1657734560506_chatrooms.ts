@@ -8,7 +8,7 @@ export default class extends BaseSchema {
       table.increments('id')
       table.string('name')
       table.string('description')
-      table.integer("capacity", {default: 25})
+      table.integer("capacity").defaultTo(25)
       table.integer('owner');
       /**
        * Uses timestamptz for PostgreSQL and DATETIME2 for MSSQL

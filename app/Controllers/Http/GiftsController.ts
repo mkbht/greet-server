@@ -14,7 +14,7 @@ export default class GiftsController {
     }
   }
 
-  public async list({ auth }: HttpContextContract) {
+  public async list({ }: HttpContextContract) {
     const gifts = await Gift.query();
     return gifts;
   }
