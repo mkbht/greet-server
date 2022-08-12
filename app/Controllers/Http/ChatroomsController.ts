@@ -16,7 +16,7 @@ export default class ChatroomsController {
 
   public async listChatrooms({ response }: HttpContextContract) {
     try {
-      const chatrooms = await Chatroom.query().limit(3).preload('joinedUsers');
+      const chatrooms = await Chatroom.query().limit(5).preload('joinedUsers');
       return response.send(chatrooms);
     } catch (e) {
       return response.badRequest({message: "Failed to load chatrooms."});
@@ -55,7 +55,7 @@ export default class ChatroomsController {
     chatroom.capacity = 25;
     chatroom.owner = auth.user!.id;
     await chatroom.save();
-    return chatroom;
+    return response.send({message: "Chatroom created successfully"});
   }
 
   public async delete({ request, response }: HttpContextContract) {
@@ -133,7 +133,7 @@ export default class ChatroomsController {
     try {
     let message = request.input("message");
     let command = message.split(" ");
-    if(['!start', '!j', '!h', '!t'].indexOf(message) > -1) {
+    if(['!start', '!j', '!h', '!t'].indexOf(message) > -1 && request.input("chatroom_id") == 50) {
       let res = await this.playGame(message, request, response, auth);
       return res;
     }

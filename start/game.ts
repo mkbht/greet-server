@@ -7,7 +7,7 @@ Ws.boot();
 
 init();
 // periodically run init
-let timer = setInterval(init, 10000);
+let timer = setInterval(init, 30000);
 
 
 
@@ -20,7 +20,7 @@ Redis.subscribe('hot:play', async (payload) => {
       break;
     }
     case 'beforeJoin': {
-      Ws.io.emit("sendGameMessage", {
+      Ws.io.to("room:50").emit("sendGameMessage", {
         sender: "GAME",
         sender_id: 0,
         chatroom_id: 0,
@@ -30,7 +30,7 @@ Redis.subscribe('hot:play', async (payload) => {
       break;
     }
     case 'join': {
-      Ws.io.emit("sendGameMessage", {
+      Ws.io.to("room:50").emit("sendGameMessage", {
         sender: "GAME",
         sender_id: 0,
         chatroom_id: 0,
@@ -40,7 +40,7 @@ Redis.subscribe('hot:play', async (payload) => {
       break;
     }
     case 'beforeChoice': {
-      Ws.io.emit("sendGameMessage", {
+      Ws.io.to("room:50").emit("sendGameMessage", {
         sender: "GAME",
         sender_id: 0,
         chatroom_id: 0,
@@ -67,7 +67,7 @@ Redis.subscribe('hot:play', async (payload) => {
       break;
     }
     case 'notEnoughPlayers': {
-        Ws.io.emit("sendGameMessage", {
+        Ws.io.to("room:50").emit("sendGameMessage", {
           sender: "GAME",
           sender_id: 0,
           chatroom_id: 0,
@@ -84,7 +84,7 @@ async function init() {
   await Redis.del('gameUser');
   await Redis.del('head');
   await Redis.del('tail');
-  Ws.io.emit("sendGameMessage", {
+  Ws.io.to("room:50").emit("sendGameMessage", {
     sender: "GAME",
     sender_id: 0,
     chatroom_id: 0,
@@ -96,7 +96,7 @@ async function init() {
 async function startGame(data) {
   clearInterval(timer);
   await Redis.set("hot:status", "start");
-  Ws.io.emit("sendGameMessage", {
+  Ws.io.to("room:50").emit("sendGameMessage", {
     sender: "GAME",
     sender_id: 0,
     chatroom_id: 0,
@@ -116,7 +116,7 @@ async function startGame(data) {
 async function choice(data) {
 
   let gameUser = await Redis.smembers("gameUser");
-  Ws.io.emit("sendGameMessage", {
+  Ws.io.to("room:50").emit("sendGameMessage", {
     sender: "GAME",
     sender_id: 0,
     chatroom_id: 0,
@@ -133,7 +133,7 @@ async function choice(data) {
         status: 'notEnoughPlayers'
       }));
     } else {
-      Ws.io.emit("sendGameMessage", {
+      Ws.io.to("room:50").emit("sendGameMessage", {
         sender: "GAME",
         sender_id: 0,
         chatroom_id: 0,
@@ -163,7 +163,7 @@ async function beforeFlip(data) {
 }
 
 async function flip(data) {
-  Ws.io.emit("sendGameMessage", {
+  Ws.io.to("room:50").emit("sendGameMessage", {
     sender: "GAME",
     sender_id: 0,
     chatroom_id: 0,
@@ -171,10 +171,10 @@ async function flip(data) {
     message: `Choice period ends. Bot is flipping the coin.`
   });
   setTimeout(async () => {
-    const randomNumber = Math.floor(Math.random() * 1) + 0;
+    const randomNumber = Math.floor(Math.random() * (1 - 0 + 1) + 0);
     console.log(randomNumber);
     const choice = ['Head', 'Tail'];
-    Ws.io.emit("sendGameMessage", {
+    Ws.io.to("room:50").emit("sendGameMessage", {
       sender: "GAME",
       sender_id: 0,
       chatroom_id: 0,
@@ -188,7 +188,7 @@ async function flip(data) {
     else {
       winners = await Redis.smembers("tail");
     }
-    Ws.io.emit("sendGameMessage", {
+    Ws.io.to("room:50").emit("sendGameMessage", {
       sender: "GAME",
       sender_id: 0,
       chatroom_id: 0,

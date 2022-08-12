@@ -59,5 +59,9 @@ Route.group(() => {
     // gifts
     Route.get("gifts", "GiftsController.list");
 
+    // stories
+    Route.get("stories", "StoriesController.list");
+    Route.post("stories", "StoriesController.upload");
+
   }).middleware("auth:api");
 }).prefix("api");

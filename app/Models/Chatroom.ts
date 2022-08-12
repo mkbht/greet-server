@@ -20,7 +20,7 @@ export default class Chatroom extends BaseModel {
 
   @computed()
   public get joined() {
-    return this.joinedUsers.length;
+    return this.joinedUsers.length || 0;
   }
 
 

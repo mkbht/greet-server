@@ -79,7 +79,7 @@ export default class AuthController {
             }
             return response.status(500).send({
                 code: error.code,
-                message: "Could not create new account. Something went wrong."
+                message: error.message
             });
         }
 
